@@ -70,11 +70,13 @@ ini_set('error_reporting', E_ALL);
 ini_set('display_errors', true);
 
 require_once __DIR__ . './src/SimpleXLSX.php';
-$table_url = '123.xlsx';
 
-if ($xlsx = SimpleXLSX::parse($table_url)) {
-    $start_table = 1;
-    $end_table = 15;
+
+# Функция для получения данных из таблицы
+function get_data_from_table($start_table, $end_table)
+{
+    $table_url = '123.xlsx';
+    $xlsx = SimpleXLSX::parse($table_url);
     echo '<h1>' . (string)$xlsx->rows()[0][0] . '</h1>';
     echo '<table border=1>';
     for ($i = $start_table; $i < $end_table; $i++) {
@@ -85,16 +87,16 @@ if ($xlsx = SimpleXLSX::parse($table_url)) {
             if (empty($cell)) {
                 echo '&nbsp;';
             } else {
-                echo (string) $cell;
+                echo $cell;
             }
             echo '</td>';
         }
         echo '</tr>';
     }
     echo '</table>';
-} else {
-    echo SimpleXLSX::parseError();
 }
+echo get_data_from_table(1, 15);
+$xlsx = SimpleXLSX::parse("123.xlsx");
 
-echo $start_table;
+
 
